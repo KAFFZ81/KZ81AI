@@ -58,7 +58,7 @@ async function askAI(text, mode=state.mode){
     const data=await response.json();
     if(!response.ok)throw new Error(data.error||"Permintaan AI gagal.");
     state.messages.push({role:"assistant",text:data.text||"Tidak ada jawaban dari AI."});
-  }catch(err){state.messages.push({role:"assistant",text:"Maaf, belum bisa menghubungi AI.\n\n"+err.message+"\n\nPastikan secret GEMINI_API_KEY sudah ditambahkan di Cloudflare Pages, lalu deploy ulang."});}
+  }catch(err){state.messages.push({role:"assistant",text:"Maaf, belum bisa menghubungi AI.\n\n"+err.message+"\n\nPastikan binding Workers AI bernama AI sudah ditambahkan di Cloudflare Pages > Settings > Bindings, lalu deploy ulang."});}
   finally{state.busy=false;$("#sendBtn").disabled=false;renderMessages();saveHistory();}
 }
 $("#chatForm").addEventListener("submit",e=>{e.preventDefault();const t=$("#promptInput").value.trim();if(!t)return;$("#promptInput").value="";$("#promptInput").style.height="auto";askAI(t);});
